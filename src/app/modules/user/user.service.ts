@@ -10,6 +10,12 @@ import User from "./user.model";
 
 //    get users from DB 
 export const getUsers = async () : Promise<IUser[] | []> => {
-    const users = User.find();
+    const users = await User.find();
     return users ;
-}
+};
+
+// get single user from DB 
+export const getUserFromDB = async(payloadId : number) : Promise<IUser | null> =>{
+    const user = await User.findOne({id:payloadId});
+    return user ;
+};
