@@ -1,8 +1,12 @@
-import { Schema, model } from "mongoose";
-import { IUser } from "./user.interface";
+import { Model, Schema, model } from "mongoose";
+import { IUser, IUserMethods } from "./user.interface";
+
+
+// Create a new Model type that knows about IUserMethods...
+type UserModel = Model<IUser, {}, IUserMethods>;
 
 // creating Schema 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser, UserModel ,IUserMethods>({
     id : {
         type: Number ,
         required: true ,
@@ -46,6 +50,10 @@ const userSchema = new Schema<IUser>({
     }
 });
 
+userSchema.method('fullName', function fullName() {
+    return this.name.firstName + ' ' + this.name.lastName;
+  });
+
 // creating model 
-const User = model<IUser>('usersMongoose', userSchema);
+const User = model<IUser, UserModel>('usersMongoose', userSchema);
 export default User ;

@@ -3,8 +3,9 @@ import User from "./user.model";
 
 //    create new user 
   export  const createUserToDb = async(payload : IUser) : Promise<IUser> =>{
-    const user = new User (payload);
-    await user.save()
+    const user = new User (payload); // User => class , user => instance
+    await user.save() // eta hocce instance method
+   console.log(user.fullName()); //custom instance method
     return user ;
    };
 
